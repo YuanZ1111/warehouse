@@ -1,15 +1,16 @@
 package com.itheima.controller;
 
 import com.google.code.kaptcha.Producer;
-import com.itheima.entity.CurrentUser;
-import com.itheima.entity.LoginUser;
-import com.itheima.entity.Result;
-import com.itheima.entity.User;
+import com.itheima.entity.*;
+import com.itheima.service.AuthService;
 import com.itheima.service.UserService;
 import com.itheima.utils.DigestUtil;
 import com.itheima.utils.TokenUtils;
 import com.itheima.utils.WarehouseConstants;
 
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -23,17 +24,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-
+@Slf4j
 public class LoginController {
 
     @Autowired
     private UserService userService;
     @Autowired
     private TokenUtils tokenUtils;
-
+@Autowired
+private AuthService authService;
     @Autowired
     private StringRedisTemplate redisTemplate;
 
@@ -125,5 +128,36 @@ public class LoginController {
 
 
 
+    //加载用户权限菜单树的接口
+
+    @GetMapping("/user/auth-list")
+    public Result loadAuthTree(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+
+
+        CurrentUser currentUser = tokenUtils.getCurrentUser(token);
+
+        log.info("currentUserId: " + currentUser.getUserId());
+
+        List<Auth> authTree = authService.authTreeById(currentUser.getUserId());
+        log.info("Auth tree: {}", authTree);
+    return Result.ok(authTree);
+    }
+
+
+@DeleteMapping("/logout")
+
+    public Result logout(@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token) {
+
+redisTemplate.delete(token);
+
+return Result.ok("退出系统");
+
 
 }
+
+
+
+    }
+
+
+
