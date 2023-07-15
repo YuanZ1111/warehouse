@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.UserMapper">
+<!--&gt; 增删改查 只需要加方法名和指定实体类就ok了-->
+    <select id="findUserByCode" resultType="com.itheima.entity.User">
+
+select * from user_info where user_code =#{usercode} and is_delete = 0;
+
+
+
+    </select>
+</mapper>
