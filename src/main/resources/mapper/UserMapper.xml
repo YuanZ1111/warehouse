@@ -92,4 +92,21 @@ limit
 
 
     </select>
+
+    <insert id="saveUser">
+   INSERT INTO user_info values (
+
+      null,#{userCode},#{userName},#{userPwd},null,1,0,#{createBy},now(),null,null
+                                )
+
+    </insert>
+
+    <update id="updateState">
+
+        update user_info t1 set  t1.user_state = #{userState},
+        t1.update_by = #{updateBy},
+        t1.update_time = now()
+        where  #{userId}  = t1.user_id
+
+    </update>
 </mapper>

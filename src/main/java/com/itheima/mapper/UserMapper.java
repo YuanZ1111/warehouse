@@ -20,4 +20,8 @@ public interface UserMapper {
     public List<User> findUserByPage( @Param("user") User user ,@Param("page") Page page);
 
     public  Integer findRowCount(@Param("user") User user);
+
+     public int saveUser(User user);
+
+    public int  updateState(User user );
 }

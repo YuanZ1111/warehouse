@@ -4,11 +4,11 @@ import com.itheima.entity.Result;
 import com.itheima.entity.User;
 import com.itheima.page.Page;
 import com.itheima.service.UserService;
+import com.itheima.utils.WarehouseConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -31,7 +31,28 @@ log.info("===>>>usercode:{}" , user.getUserCode() );
 }
 
 
+@PostMapping("/addUser")
+public  Result saveUser(@RequestBody User user ,@RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
 
+    int flag = userService.saveUser(user, token);
+
+if (flag >0){
+    return Result.ok("成功添加");
+}else {
+    return Result.err(Result.CODE_ERR_BUSINESS,"添加失败(可能是用户名已经存在),请重试");
+}
+
+}
+
+@PutMapping("/updateState")
+ public Result updateState(@RequestBody User user , @RequestHeader(WarehouseConstants.HEADER_TOKEN_NAME) String token){
+
+    int flag = userService.updateState(user, token);
+if (flag >0){return Result.ok("修改成功");}else {
+    return Result.err(Result.CODE_ERR_BUSINESS,"修改失败");
+}
+
+}
 
 
 }
