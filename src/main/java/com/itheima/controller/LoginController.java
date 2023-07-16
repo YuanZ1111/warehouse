@@ -7,15 +7,12 @@ import com.itheima.service.UserService;
 import com.itheima.utils.DigestUtil;
 import com.itheima.utils.TokenUtils;
 import com.itheima.utils.WarehouseConstants;
-
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -26,11 +23,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 @RestController
 @Slf4j
 public class LoginController {
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -39,7 +34,6 @@ public class LoginController {
 private AuthService authService;
     @Autowired
     private StringRedisTemplate redisTemplate;
-
     @Resource(name = "captchaProducer")
     private Producer producer;
     @RequestMapping("/captcha/captchaImage")
@@ -55,7 +49,6 @@ private AuthService authService;
             redisTemplate.opsForValue().set(text, "", 3600, TimeUnit.SECONDS);
             response.setContentType("image/jpeg");
             outputStream = response.getOutputStream();
-
             ImageIO.write(image, "jpg", outputStream);
         } catch (IOException e) {
             e.printStackTrace();

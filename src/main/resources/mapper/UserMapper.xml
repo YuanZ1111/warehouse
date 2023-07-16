@@ -3,10 +3,92 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.mapper.UserMapper">
 <!--&gt; 增删改查 只需要加方法名和指定实体类就ok了-->
+
     <select id="findUserByCode" resultType="com.itheima.entity.User">
+    select * from user_info where user_code =#{usercode} and is_delete = 0;
+    </select>
 
-select * from user_info where user_code =#{usercode} and is_delete = 0;
 
+
+
+
+
+
+    <select id="findRowCount" resultType="java.lang.Integer">
+
+select count(*) from user_info
+        <where>
+
+            <if test="user.getCode != null and user.getCode != ''">
+          and user_code like concat('%',#{user.getCode},'%')
+            </if>
+
+
+
+                <if test="user.userType != null and user.userType != ''">
+
+                    and user_type=#{user.userType}
+
+            </if>
+
+
+
+            <if test="user.userState != null and user.userState != ''">
+
+
+            and user_state=#{user.userState}
+
+
+            </if>
+
+
+
+
+ and is_delete = 0
+
+        </where>
+
+
+
+    </select>
+
+
+
+
+
+
+
+
+    <select id="findUserByPage" resultType="com.itheima.entity.User">
+
+
+  select t1.*,t2.user_code
+  from
+               user_info t1 ,user_info t2
+        where t1.create_by = t2.user_id and t1.is_delete=0
+        <if test="user.userCode != null and user.userCode != ''">
+            and t1.user_code like concat('%',#{user.userCode},'%')
+        </if>
+
+
+
+        <if test="user.userType != null and user.userType != ''">
+
+            and t1.user_type=#{user.userType}
+
+        </if>
+
+
+
+        <if test="user.userState != null and user.userState != ''">
+
+
+            and t1.user_state=#{user.userState}
+
+
+        </if>
+limit
+        #{page.limitIndex} ,#{page.pageSize}
 
 
     </select>

@@ -1,8 +1,8 @@
 package com.itheima.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
+
 import java.util.Date;
 
 /**
@@ -10,6 +10,9 @@ import java.util.Date;
  */
 @Data
 @ToString
+@AllArgsConstructor
+@Setter
+@Getter
 public class User {
 
 	private int userId;//用户id
