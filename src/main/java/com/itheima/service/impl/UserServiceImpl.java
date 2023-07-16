@@ -1,8 +1,13 @@
 package com.itheima.service.impl;
 
+import com.itheima.dto.AssignRoleDto;
 import com.itheima.entity.CurrentUser;
+import com.itheima.entity.Result;
 import com.itheima.entity.User;
+import com.itheima.entity.UserRole;
+import com.itheima.mapper.RoleMapper;
 import com.itheima.mapper.UserMapper;
+import com.itheima.mapper.UserRoleMapper;
 import com.itheima.page.Page;
 import com.itheima.service.UserService;
 import com.itheima.utils.DigestUtil;
@@ -11,6 +16,7 @@ import com.itheima.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sound.sampled.Line;
 import java.time.LocalDateTime;
@@ -20,6 +26,11 @@ import java.util.List;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private RoleMapper  roleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
 @Autowired
 private UserMapper userMapper ;
 @Autowired
@@ -89,4 +100,22 @@ user.setUpdateBy(currentUser.getUserId());
 
 
     }
+   @Transactional
+    @Override
+    public void assignUser(AssignRoleDto assignRoleDto) {
+
+
+
+userRoleMapper.deleteRoleByUid(assignRoleDto.getUserId());
+        List<String> roleNameList = assignRoleDto.getRoleCheckList();
+        for (String roleName : roleNameList) {
+            Integer roleId = roleMapper.findRoleIdByName(roleName);
+            UserRole userRole = new UserRole();
+            userRole.setRoleId(roleId);
+            userRole.setUserId(assignRoleDto.getUserId());
+            userRoleMapper.saveUserRole(userRole);
+        }
+    }
+
+
 }
