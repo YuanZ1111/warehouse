@@ -6,6 +6,8 @@ import com.itheima.mapper.AuthMapper;
 import com.itheima.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,15 +15,32 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 @Slf4j
+//指定缓存的名称(缓存的键的前缀 一般是标注@cacheconfig的注解类)
+@CacheConfig(cacheNames = {"com.itheima.service.impl.AuthServiceImpl"})
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    @Override
+    //查出所有权限菜单
+    //查询方法上标注cacheable注解 并指定缓存的键
+    @Cacheable(key = "'all:authTree'")
+    public List<Auth> allAuthTree() {
+        List<Auth> allAuthList = authMapper.findAllAuth();
+
+        //将所有权限菜单List<Auth> 转成 权限菜单树List
+        List<Auth> authTreeList = allAuthToAuthTree(allAuthList, 0);
+        return authTreeList ;
+
+
+
+    }
     @Autowired
     private AuthMapper authMapper;
+
 @Autowired
 private StringRedisTemplate redisTemplate;
 
     //向redis缓存  -- 键   authTree:userId  值 List<Auth>转的JSON串
-
     @Override
     public List<Auth> authTreeById(Integer userId) {
 
@@ -56,7 +75,6 @@ log.info("service"+authTreeListJSON);
 
 
     }
-
 
 
     private List<Auth> allAuthToAuthTree(List<Auth> allAuthList, int parentId){

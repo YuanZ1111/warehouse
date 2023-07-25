@@ -1,5 +1,7 @@
 package com.itheima.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -78,6 +80,8 @@ public class Role implements Serializable {
         this.createBy = createBy;
     }
 
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getCreateTime() {
         return createTime;
     }
@@ -101,4 +105,10 @@ public class Role implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    //追加属性
+    private String getCode ; //角色创建人
+
+
+
 }
