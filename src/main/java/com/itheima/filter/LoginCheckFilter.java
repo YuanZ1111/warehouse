@@ -43,7 +43,7 @@ public class LoginCheckFilter implements Filter {
 
         //过滤器拦截到的当前的请求的URL接口
         String url = request.getServletPath();
-        if (urlList.contains(url)){
+        if (urlList.contains(url)||url.contains("/img/upload")){
             //是白名单 : 放行
 
 

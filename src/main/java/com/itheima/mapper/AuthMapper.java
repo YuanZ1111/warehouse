@@ -17,6 +17,5 @@ public interface AuthMapper {
 //查询所有权限菜单 的 方法
     public List<Auth> findAllAuth();
 //根据角色id查询分配的所有权限菜单的方法
-    public List<Auth> findAuthByRid(Integer roleId);
 
 }
