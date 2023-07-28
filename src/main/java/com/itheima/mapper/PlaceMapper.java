@@ -1,6 +1,9 @@
 package com.itheima.mapper;
 
+import com.itheima.entity.Place;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author 85839
@@ -10,6 +13,10 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface PlaceMapper {
+
+    //查询所有产地
+
+    public List<Place> findAllPlace();
 
 }
 

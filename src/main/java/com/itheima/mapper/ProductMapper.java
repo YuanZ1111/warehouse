@@ -27,6 +27,27 @@ public interface ProductMapper {
     public List<Product> findProductPage(@Param("page") Page page , @Param("product") Product product     );
 
 
+    //根据型号查询商品的方法
+
+    public Product findProductById(String productNum);
+
+    //添加商品的方法
+
+    public int insertProduct(Product product);
+
+    //商品上下架状态
+
+    public int changeProductStateByPid(Integer productId ,String upDownState );
+
+
+   //根据商品id删除商品的方法
+
+    public int removeProductByIds(List<Integer> productIdList);
+
+    //根据商品id修改商品的方法
+
+    public int setProductById(Product product);
+
 }
 
 

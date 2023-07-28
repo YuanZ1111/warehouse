@@ -40,7 +40,7 @@ public class LoginCheckFilter implements Filter {
         List<String> urlList = new ArrayList<String>();
         urlList.add("/captcha/captchaImage");
         urlList.add("/login");
-
+        urlList.add("/product/img-upload");
         //过滤器拦截到的当前的请求的URL接口
         String url = request.getServletPath();
         if (urlList.contains(url)||url.contains("/img/upload")){

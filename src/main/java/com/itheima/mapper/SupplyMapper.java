@@ -1,6 +1,9 @@
 package com.itheima.mapper;
 
+import com.itheima.entity.Supply;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author 85839
@@ -10,6 +13,11 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface SupplyMapper {
+
+
+
+    //查询所有供应商
+    public List<Supply> queryAllSupplyList();
 
 }
 

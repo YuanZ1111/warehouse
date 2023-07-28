@@ -4,16 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itheima.mapper.SupplyMapper">
 
-    <resultMap id="BaseResultMap" type="com.itheima.entity.Supply">
-            <id property="supplyId" column="supply_id" jdbcType="INTEGER"/>
-            <result property="supplyNum" column="supply_num" jdbcType="VARCHAR"/>
-            <result property="supplyName" column="supply_name" jdbcType="VARCHAR"/>
-            <result property="supplyIntroduce" column="supply_introduce" jdbcType="VARCHAR"/>
-            <result property="concat" column="concat" jdbcType="VARCHAR"/>
-            <result property="phone" column="phone" jdbcType="VARCHAR"/>
-            <result property="address" column="address" jdbcType="VARCHAR"/>
-            <result property="isDelete" column="is_delete" jdbcType="CHAR"/>
-    </resultMap>
 
+    <select id="queryAllSupplyList" resultType="com.itheima.entity.Supply">
 
+        select * from Supply WHERE is_delete =  0 ;
+
+    </select>
 </mapper>

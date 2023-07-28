@@ -1,6 +1,8 @@
 package com.itheima.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -35,6 +37,12 @@ public class ProductType implements Serializable {
     private String typeDesc;
 
     private static final long serialVersionUID = 1L;
+
+    //--追加子分类属性
+//存放的是当前分类下的所有子分类
+    private List<ProductType> childProductCategory ;
+
+
 
     @Override
     public boolean equals(Object that) {

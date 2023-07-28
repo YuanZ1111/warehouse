@@ -1,6 +1,9 @@
 package com.itheima.mapper;
 
+import com.itheima.entity.ProductType;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author 85839
@@ -10,6 +13,15 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface ProductTypeMapper {
+
+//查询分类树
+
+    //查询所有商品分类
+    public List<ProductType> findAllProductTypes();
+
+
+
+
 
 }
 
